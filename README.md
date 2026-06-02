@@ -1,3 +1,4 @@
+💰 AI-powered QuickBooks + Stripe analytics for freelancers & small businesses
 # Revenue Tracker
 
 A modern revenue and invoice analytics platform built with **React**, **FastAPI**, and **PostgreSQL**.
@@ -5,6 +6,15 @@ A modern revenue and invoice analytics platform built with **React**, **FastAPI*
 Revenue Tracker helps freelancers, consultants, agencies, tutors, contractors, and small businesses understand their financial performance by transforming invoices into actionable insights.
 
 ---
+# 🤖 1. AI FINANCIAL ADVISOR (“why revenue dropped”)
+## 🧠 What it does
+
+It compares:
+
+- this month revenue
+- last month revenue
+- detects drop
+- explains WHY using patterns (clients, volume, timing)
 
 ## Features
 
