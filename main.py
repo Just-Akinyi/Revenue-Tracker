@@ -21,5 +21,6 @@ app.include_router(analytics.router)
 app.include_router(integrations.router)
 
 @app.get("/")
-def health_check():
+def home():
     return {"status": "healthy", "service": "revenue-tracker-backend"}
+
