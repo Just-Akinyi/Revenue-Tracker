@@ -615,7 +615,8 @@
 //     </div>
 //   );
 // }
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -672,7 +673,34 @@ export default function App({ userPlan = "Scale Core", onLogout = () => console.
     { id: 3, client_name: "Kilimanjaro Outfitters", amountUSD: 1200.00, invoice_date: "2026-05-20", type: "M-Pesa B2B", status: "Pending" },
     { id: 4, client_name: "Sora Software London", amountUSD: 8900.00, invoice_date: "2026-05-15", type: "Swift Wire", status: "Paid" },
   ]);
+const fileInputRef = useRef(null);
 
+const handleFileUpload = async (e) => {
+  try {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      alert("File must be less than 10MB");
+      return;
+    }
+
+    const fileName = `${Date.now()}-${file.name}`;
+
+    const { data, error } = await supabase.storage
+      .from("invoices")
+      .upload(fileName, file);
+
+    if (error) throw error;
+
+    alert("Invoice uploaded successfully!");
+    console.log(data);
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
   // Conversion Utility
   const convert = (valueInUSD) => {
     const config = CURRENCIES[selectedCurrency];
@@ -950,7 +978,7 @@ export default function App({ userPlan = "Scale Core", onLogout = () => console.
               <h3 className="font-bold text-slate-900">AI Document Processing</h3>
               <p className="text-xs text-slate-500 mt-0.5">Drop incoming invoices to instantly parse parameters into database entries.</p>
             </div>
-
+{/*
             <div className="border-2 border-dashed border-slate-200 hover:border-indigo-400 rounded-xl p-8 text-center cursor-pointer transition-colors bg-slate-50/50 group">
               <div className="bg-white p-2.5 rounded-xl shadow-sm border border-slate-200/60 inline-block mb-3 group-hover:scale-110 transition-transform">
                 <FileText className="w-5 h-5 text-indigo-600" />
@@ -958,7 +986,33 @@ export default function App({ userPlan = "Scale Core", onLogout = () => console.
               <p className="text-xs font-semibold text-slate-800">Upload processing invoice PDF</p>
               <p className="text-[10px] text-slate-400 mt-1 font-medium">Automatic recognition engine max 10MB</p>
             </div>
+*/}
+<>
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept=".pdf"
+    onChange={handleFileUpload}
+    className="hidden"
+  />
 
+  <div
+    onClick={() => fileInputRef.current?.click()}
+    className="border-2 border-dashed border-slate-200 hover:border-indigo-400 rounded-xl p-8 text-center cursor-pointer transition-colors bg-slate-50/50 group"
+  >
+    <div className="bg-white p-2.5 rounded-xl shadow-sm border border-slate-200/60 inline-block mb-3 group-hover:scale-110 transition-transform">
+      <FileText className="w-5 h-5 text-indigo-600" />
+    </div>
+
+    <p className="text-xs font-semibold text-slate-800">
+      Upload processing invoice PDF
+    </p>
+
+    <p className="text-[10px] text-slate-400 mt-1 font-medium">
+      Automatic recognition engine max 10MB
+    </p>
+  </div>
+</>
             <hr className="border-slate-100" />
 
             <div>
