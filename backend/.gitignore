@@ -1,0 +1,14 @@
+  GNU nano 7.2                       .gitignore *                               
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# Local environment files (CRITICAL: Never leak API keys/database credentials!)
+.env
+.env.local
+.env.develop          
+
+
